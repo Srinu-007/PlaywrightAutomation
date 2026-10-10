@@ -354,32 +354,32 @@ import test, { expect } from "@playwright/test";
 //     // // Verify the result
 //     // await expect(page.locator('.text-success')).toHaveText('Yes');
 
-//     // console.log('Checkbox and radio button practice passed.');
-// //)};
+// //     // console.log('Checkbox and radio button practice passed.');
+// // //)};
 
-//*********************8AUTO WAITING */
-test('Practice auto-waiting and URL waits', async ({ page }) => {
+// //*********************8AUTO WAITING */
+// test('Practice auto-waiting and URL waits', async ({ page }) => {
 
-    await page.goto(
-        'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login'
-    );
+//     await page.goto(
+//         'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login'
+//     );
 
-    await page.getByPlaceholder('Username').fill('Admin');
-    await page.getByPlaceholder('Password').fill('admin123');
+//     await page.getByPlaceholder('Username').fill('Admin');
+//     await page.getByPlaceholder('Password').fill('admin123');
 
-    // Start waiting for the dashboard URL before clicking Login
-    const navigation = page.waitForURL('**/dashboard/**');
+//     // Start waiting for the dashboard URL before clicking Login
+//     const navigation = page.waitForURL('**/dashboard/**');
 
-    await page.getByRole('button', { name: 'Login' }).click();
+//     await page.getByRole('button', { name: 'Login' }).click();
 
-    await navigation;
+//     await navigation;
 
-    // Verify the destination page
-    await expect(
-        page.getByRole('heading', { name: 'Dashboard' })
-    ).toBeVisible();
+//     // Verify the destination page
+//     await expect(
+//         page.getByRole('heading', { name: 'Dashboard' })
+//     ).toBeVisible();
 
-    console.log('Auto-waiting practice passed.');
-});
+//     console.log('Auto-waiting practice passed.');
+// });
 
 

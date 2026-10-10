@@ -17,7 +17,7 @@ pipeline {
 
         stage('Run Playwright Tests') {
             steps {
-                bat 'npx playwright test --project="Google Chrome" --no-deps'
+                bat 'npx playwright test'
             }
         }
     }

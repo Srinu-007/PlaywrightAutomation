@@ -210,4 +210,7 @@ sc query jenkins - Check Jenkins service
 git init
 git status
 git add .
-
+git commit -m "Initial commit: Playwright automation framework"
+git remote add origin https://github.com/Srinu-007/PlaywrightAutomation.git
+git remote -v
+git push -u origin main

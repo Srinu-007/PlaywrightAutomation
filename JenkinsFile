@@ -2,10 +2,18 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(
+            name: 'TEST_SUITE',
+            choices: ['all', 'smoke', 'regression', 'api'],
+            description: 'Select the Playwright test suite'
+        )
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                echo 'Source code checked out by Jenkins SCM configuration'
+                echo 'Source code checked out from GitHub'
             }
         }
 
@@ -17,20 +25,30 @@ pipeline {
 
         stage('Run Playwright Tests') {
             steps {
-                bat 'npx playwright test'
+                script {
+                    if (params.TEST_SUITE == 'all') {
+                        bat 'npx playwright test'
+                    } else if (params.TEST_SUITE == 'smoke') {
+                        bat 'npx playwright test --grep "@smoke"'
+                    } else if (params.TEST_SUITE == 'regression') {
+                        bat 'npx playwright test --grep "@regression"'
+                    } else if (params.TEST_SUITE == 'api') {
+                        bat 'npx playwright test --project=API'
+                    }
+                }
             }
         }
     }
 
     post {
         always {
-            echo 'Playwright pipeline execution completed.'
+            echo 'Pipeline execution completed.'
         }
         success {
-            echo 'All selected Playwright tests passed.'
+            echo 'Selected test suite passed.'
         }
         failure {
-            echo 'Pipeline failed. Check the console output.'
+            echo 'Build failed. Check Console Output.'
         }
     }
 }

@@ -214,3 +214,15 @@ git commit -m "Initial commit: Playwright automation framework"
 git remote add origin https://github.com/Srinu-007/PlaywrightAutomation.git
 git remote -v
 git push -u origin main
+
+2. Commands to run specific tests
+These are the commands you'll use as an automation engineer.
+Requirement	Playwright command
+Run one test file	npx playwright test tests/login.spec.ts
+Run one named test	npx playwright test -g "OrangeHRM Login"
+Run smoke-tagged tests	npx playwright test --grep "@smoke"
+Run regression-tagged tests	npx playwright test --grep "@regression"
+Run API tests	npx playwright test --project=API
+Run login project	npx playwright test --project=login
+Run multiple specific files	npx playwright test tests/login.spec.ts tests/admin.spec.ts
+Run tests matching a pattern, excluding another	npx playwright test --grep "@smoke" --grep-invert "@slow"

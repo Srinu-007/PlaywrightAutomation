@@ -1,0 +1,213 @@
+**Setup:
+node version : node -v
+Initialize playwright folder structure : npm init playwright@latest
+✔ Language: TypeScript
+✔ Test folder: tests
+✔ Add GitHub Actions workflow: No
+✔ Install Playwright browsers: Yes
+
+Check tests passed/failed : npx playwright test
+
+test() : test case
+ **({ page }) :
+ Playwright Test gives our test a Page fixture.
+"Give me the Page that Playwright created for this test."
+
+What exactly is a fixture?
+A pre-built resource/environment that Playwright provides to your test.
+Playwright Test
+       │
+       ├── page
+       ├── context
+       ├── browser
+       ├── browserName
+       └── request
+
+
+await page.goto(...);
+await page.getByPlaceholder('Username').fill('Admin');
+await page.getByPlaceholder('Password').fill('admin123');
+await page.getByRole('button', { name: 'Login' }).click();
+await expect(page.getByText('Dashboard')).toBeVisible();
+await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
+
+What is a fixture in Playwright?
+A fixture is a reusable test resource or environment provided by Playwright Test. 
+Playwright has built-in fixtures such as page, context, browser and request. 
+For example, the page fixture provides an isolated Page instance to the test. 
+We can also create custom fixtures using test.extend() for framework-specific requirements.
+
+What is strict mode violation in Playwright?
+Playwright locators are strict when an action or assertion expects a single element. 
+If the locator matches multiple elements, Playwright throws a strict mode violation. 
+I would normally make the locator more specific using role, accessible name, attributes, 
+filtering, or a better locator strategy rather than blindly using first or nth.
+
+************************************TYPESCRIPT FOR PLAYWRIGHT:
+**OBJECTS
+  const user = {
+     username: "Admin",
+     password: "admin123",
+     role: "Dispatcher"
+  }
+
+**CLASSES
+export class LoginPage {
+
+    login() {
+        //...
+    }
+}
+
+**Constructor:
+export class LoginPage {
+
+    constructor(private page: Page) {
+    }
+
+}
+
+**Interfaces
+ Interfaces are useful for defining the structure of objects.
+ interface User {
+    username: string;
+    password: string;
+    role: string;
+}
+
+const user: User = {
+    username: 'Admin',
+    password: 'admin123',
+    role: 'Dispatcher'
+};
+
+
+****************LOCATORS
+getByRole()
+page.getByRole('textbox')
+page.getByRole('button')
+page.getByRole('checkbox')
+page.getByRole('radio')
+page.getByRole('link')
+page.getByRole('heading')
+
+getByPlaceholder()
+page.getByPlaceholder('Username')
+
+getByLabel()
+await page.getByLabel('Email').fill('test@gmail.com');
+
+getByText()
+await page.getByText('Welcome').isVisible();
+
+getByTestId()
+await page.getByTestId('login-button').click();
+
+locator()
+page.locator('input[name="username"]')
+page.locator('#username')
+page.locator('[data-testid="login-button"]')
+
+CSS selectors
+page.locator('[name="username"]')
+page.locator('input[name="username"][type="text"]')
+page.locator('#username')
+page.locator('.username')
+
+XPath
+page.locator('//input[@name="username"]')
+
+**Locator chaining
+const userCard = page.locator('.user-card');
+await userCard.getByRole('button', { name: 'Edit' }).click();
+
+**filter()
+const johnCard = page.locator('.user-card')
+    .filter({ hasText: 'John' });
+
+await johnCard.getByRole('button', { name: 'Edit' }).click();
+
+**first(), last(), nth()
+
+**The locator priority I want you to follow
+1. getByRole()
+        ↓
+2. getByLabel()
+        ↓
+3. getByPlaceholder()
+        ↓
+4. getByText()
+        ↓
+5. getByTestId()
+        ↓
+6. CSS locator
+        ↓
+7. XPath
+
+**Filtering
+const row = page.locator('tr').filter({
+    hasText: 'WO-102'
+});
+await row.getByRole('button', { name: 'View' }).click();
+
+**waitForTimeout()
+await page.waitForTimeout(5000);
+
+XPath
+//div[@role='row'][.//div[normalize-space()='Admin']]//i[contains(@class,'bi-pencil-fill')]
+
+**Exact Page Locator
+const row = page.getByRole('row').filter({
+    has: page.getByText('FMLName', { exact: true })
+});
+
+npx playwright test tests/login.spec.ts --headed
+
+**to run smoke test
+npx playwright test --grep @smoke
+
+**Generate the HTML report
+npx playwright show-report (local host 9323)
+
+What is a fixture?
+
+storageState?
+
+**to run setup tests
+npx playwright test tests/auth/setup.ts --project=setup
+
+**List the tests discovered by Playwright:
+npx playwright test --project=API --list
+
+npx playwright test --project="Google Chrome" --workers=2 --headed --retries=1
+
+**What does waitUntil mean?
+When you navigate to a page, Playwright can wait for different browser-loading milestones.
+commit	Response received and document begins loading
+domcontentloaded	HTML has been parsed
+load	Page load event has fired
+networkidle	No network connections for at least 500 ms
+
+Assertion	What it verifies
+toBeVisible()	Element is visible
+toBeHidden()	Element is hidden or absent
+toHaveText()	Element has the expected text
+toContainText()	Element contains the expected text
+toHaveValue()	Input has the expected value
+toBeEnabled()	Element is enabled
+toBeDisabled()	Element is disabled
+toBeChecked()	Checkbox or radio is checked
+toHaveURL()	Page URL matches the expectation
+toHaveTitle()	Page title matches the expectation
+
+
+//***************************JENKISN Setup
+java -version - Check Java
+node -v - Check Node.js
+npm -v - Check npm
+sc query jenkins - Check Jenkins service
+
+git init
+git status
+git add .
+
